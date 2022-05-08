@@ -13,13 +13,13 @@
 * ...
 
 ## Redis延迟队列实现原理
-- 利用Redis的有序集合，member为jobId, score为任务执行的时间戳 
-- 每秒扫描一次集合，取出执行时间小于等于当前时间的任务.
+- 利用Redis的有序集合，member为jobId, score为任务执行的时间戳。
+- 每秒扫描一次集合，取出执行时间小于等于当前时间的任务。
 
 ## Kafka延迟队列实现原理
 - 利用Kafka的assign为consumer手动、显示的指定需要消费的topic-partitions，使用提供的暂停、恢复api和重置offset实现延迟消费。
 - 启用多个消费实例时，会对配置中指定的PartitionGroups实行抢占订阅，进程退出时退订。
-- Kafka需要事先确定好延迟时间的topic
+- Kafka需要事先确定好延迟时间的topic(参照delay-queue.conf里kafka队列配置)。
 
 ## Job存储
 > redis和kafka的延迟队列只流转jobId，具体任务存储在redis，并使用msgpack高效压缩消息体。
