@@ -61,9 +61,9 @@ HTTP Server监听
 URL地址 `/delay-queue/api/jobs/add`
 ```json
 {
-  "topic": "order",
-  "delay": 3600,
-  "body": "{\"uid\": 10829378,\"created\": 1498657365 }"
+  "topic": "test-user-queue",
+  "delay": 300,
+  "body": "{\"user_id\": 101}"
 }
 ```
 |  参数名 |     类型    |     含义     |        备注       |
@@ -73,13 +73,23 @@ URL地址 `/delay-queue/api/jobs/add`
 |   delay  | int        |    Job需要延迟的时间, 单位：秒    |                   |
 |   body   | string     |    自定义job内容 |                   |
 
+返回值
+```json
+{
+    "code": 0,
+    "message": "操作成功",
+    "data": {
+        "job_id": "73b77723-2b03-e3f7-8442-a5c9f8bbe0e0"
+    }
+}
+```
 
 ### 移除任务
 URL地址 `/delay-queue/api/jobs/remove`
 
 ```json
 {
-  "job_id": "15702398321"
+  "job_id": "73b77723-2b03-e3f7-8442-a5c9f8bbe0e0"
 }
 ```
 
@@ -93,7 +103,7 @@ URL地址 `/delay-queue/api/jobs/get`
 
 ```json
 {
-  "job_id": "15702398321"
+  "job_id": "73b77723-2b03-e3f7-8442-a5c9f8bbe0e0"
 }
 ```
 
@@ -108,11 +118,11 @@ URL地址 `/delay-queue/api/jobs/get`
     "code": 0,
     "message": "操作成功",
     "data": {
-        "topic": "order",
-        "id": "15702398321",
+        "topic": "test-user-queue",
+        "id": "73b77723-2b03-e3f7-8442-a5c9f8bbe0e0",
         "exec_time": 1506787453,
-        "delay": 10,
-        "body": "{\"uid\": 10829378,\"created\": 1498657365 }"
+        "delay": 300,
+        "body": "{\"uid\": 101}"
     
     }
 }
