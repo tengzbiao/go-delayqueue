@@ -25,9 +25,9 @@
 > redis和kafka的延迟队列只流转jobId，具体任务存储在redis，并使用msgpack高效压缩消息体。
 
 ## 依赖
-* [Redis](github.com/garyburd/redigo/redis)
+* [Redis](https://github.com/garyburd/redigo)
 * [Kafka](https://github.com/confluentinc/confluent-kafka-go)
-* [Gin](github.com/gin-gonic/gin)
+* [Gin](https://github.com/gin-gonic/gin)
 
 ## 安装
 * `go get -d github.com/tengzbiao/go-delay-queue`
