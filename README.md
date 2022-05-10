@@ -15,6 +15,7 @@
 ## Redis延迟队列实现原理
 - 利用Redis的有序集合，member为jobId, score为任务执行的时间戳。
 - 每秒扫描一次集合，取出执行时间小于等于当前时间的任务。
+- Redis Zset分桶提高性能，降低cpu消耗。
 
 ## Kafka延迟队列实现原理
 - 利用Kafka的assign为consumer手动、显示的指定需要消费的topic-partitions，使用提供的暂停、恢复api和重置offset实现延迟消费。
