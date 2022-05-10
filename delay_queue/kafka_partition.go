@@ -79,14 +79,16 @@ func (t *assignPartition) UnRegister() {
 
 // 暂停消费的partition集合
 type pausedTopicPartition struct {
-	lock *sync.Mutex
-	m    map[kafka.TopicPartition]struct{}
+	lock     *sync.Mutex
+	m        map[kafka.TopicPartition]struct{}
+	consumer *kafkaConsumer
 }
 
-func newPausedTopicPartition() *pausedTopicPartition {
+func newPausedTopicPartition(consumer *kafkaConsumer) *pausedTopicPartition {
 	return &pausedTopicPartition{
-		lock: new(sync.Mutex),
-		m:    make(map[kafka.TopicPartition]struct{}),
+		lock:     new(sync.Mutex),
+		m:        make(map[kafka.TopicPartition]struct{}),
+		consumer: consumer,
 	}
 }
 
@@ -97,12 +99,12 @@ func (p *pausedTopicPartition) Add(tp kafka.TopicPartition) {
 	(p.m)[tp] = struct{}{}
 }
 
-func (p *pausedTopicPartition) Resume(consumer *kafkaConsumer) {
+func (p *pausedTopicPartition) Resume() {
 	p.lock.Lock()
 	defer p.lock.Unlock()
 
 	for topicPartition := range p.m {
-		if err := consumer.Resume([]kafka.TopicPartition{topicPartition}); err != nil {
+		if err := p.consumer.Resume([]kafka.TopicPartition{topicPartition}); err != nil {
 			logger.Errorf("consumer resume err: %+v (%+v)", err, topicPartition)
 		} else {
 			delete(p.m, topicPartition)

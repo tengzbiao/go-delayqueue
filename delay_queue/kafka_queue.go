@@ -35,7 +35,7 @@ func NewKafkaQueue() (*kafkaQueue, error) {
 		producer:             producer,
 		consumer:             consumer,
 		jobs:                 newJobs(pool),
-		pausedTopicPartition: newPausedTopicPartition(),
+		pausedTopicPartition: newPausedTopicPartition(consumer),
 		assignPartition:      newAssignPartition(pool),
 	}
 	return c, nil
@@ -143,7 +143,7 @@ func (k *kafkaQueue) Schedule(stop <-chan struct{}) error {
 		for {
 			select {
 			case _ = <-ticker.C:
-				k.pausedTopicPartition.Resume(k.consumer)
+				k.pausedTopicPartition.Resume()
 				_, _ = k.consumer.Commit()
 			case <-stop:
 				k.assignPartition.UnRegister()
