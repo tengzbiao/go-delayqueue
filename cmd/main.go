@@ -29,7 +29,7 @@ func parseCommandArgs() {
 	// 配置文件
 	flag.StringVar(&configFile, "c", "", "./delay-queue -c /path/to/delay-queue.conf")
 	// 队列类型
-	flag.StringVar(&queueType, "t", "kafka", "./delay-queue -t redis")
+	flag.StringVar(&queueType, "t", "redis", "./delay-queue -t redis")
 	flag.Parse()
 }
 

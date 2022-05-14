@@ -48,11 +48,35 @@ func (r *redisQueue) Schedule(stop <-chan struct{}) error {
 	return nil
 }
 
+func (r *redisQueue) lock(bucketName string) bool {
+	conn := r.pool.Get()
+	defer conn.Close()
+
+	key := fmt.Sprintf("lock:%s", bucketName)
+
+	ret, _ := redis.String(conn.Do("SET", key, 1, "NX", "EX", 1))
+	return ret != ""
+}
+
+func (r *redisQueue) unlock(bucketName string) {
+	conn := r.pool.Get()
+	defer conn.Close()
+
+	key := fmt.Sprintf("lock:%s", bucketName)
+
+	_, _ = conn.Do("DEL", key)
+}
+
 func (r *redisQueue) scheduleByBucket(ticker *time.Ticker, bucketName string) {
 	for {
 		select {
 		case t := <-ticker.C:
+			// 一个bucket只有被一个进程扫描
+			if ok := r.lock(bucketName); !ok {
+				break
+			}
 			r.tickHandler(t, bucketName)
+			r.unlock(bucketName)
 		}
 	}
 }
@@ -80,19 +104,19 @@ func (r *redisQueue) tickHandler(t time.Time, bucketName string) {
 		job, err := r.jobs.get(bucketItem.jobId)
 		if err != nil {
 			logger.Errorf("获取Job元信息失败(%v),bucketName(%s)", err, bucketName)
-			continue
+			return
 		}
 
 		// job元信息不存在, 从bucket中删除
 		if job == nil {
 			_ = r.bucket.Remove(bucketName, bucketItem.jobId)
-			continue
+			return
 		}
 
 		// 再次确认元信息中delay是否小于等于当前时间
 		if job.ExecTime > t.Unix() {
 			_ = r.bucket.ReAdd(bucketName, <-r.bucketNameCh, job.ExecTime, job.Id)
-			continue
+			return
 		}
 
 		logger.Debugf("job has ready:%+v, msgTime:%v", job, job.Delay)
@@ -100,7 +124,7 @@ func (r *redisQueue) tickHandler(t time.Time, bucketName string) {
 		err = r.deliveryJob(job.Topic, bucketItem.jobId)
 		if err != nil {
 			logger.Errorf("job投递ready队列失败(%v), 重新进入delay队列, job(%+v), bucketName(%s)", err, job, bucketName)
-			continue
+			return
 		}
 
 		// 从bucket中删除
