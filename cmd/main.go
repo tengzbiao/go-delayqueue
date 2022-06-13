@@ -8,10 +8,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tengzbiao/go-delay-queue/config"
-	"github.com/tengzbiao/go-delay-queue/delay_queue"
-	"github.com/tengzbiao/go-delay-queue/logger"
-	"github.com/tengzbiao/go-delay-queue/routers"
+	"github.com/tengzbiao/go-delayqueue/config"
+	"github.com/tengzbiao/go-delayqueue/delay_queue"
+	"github.com/tengzbiao/go-delayqueue/logger"
+	"github.com/tengzbiao/go-delayqueue/routers"
 )
 
 var (

@@ -1,4 +1,4 @@
-# go-delay-queue
+# go-delayqueue
 
 1. 支持基于Redis实现的延迟队列
 2. 支持基于Kafka实现的延迟队列
@@ -31,7 +31,7 @@
 * [Gin](https://github.com/gin-gonic/gin)
 
 ## 安装
-* `go get -d github.com/tengzbiao/go-delay-queue`
+* `go get -d github.com/tengzbiao/go-delayqueue`
 * `go build -o delay-queue cmd/main.go`
 
 ## 运行

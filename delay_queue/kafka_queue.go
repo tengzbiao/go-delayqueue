@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"github.com/tengzbiao/go-delay-queue/config"
-	"github.com/tengzbiao/go-delay-queue/logger"
+	"github.com/tengzbiao/go-delayqueue/config"
+	"github.com/tengzbiao/go-delayqueue/logger"
 )
 
 type kafkaQueue struct {

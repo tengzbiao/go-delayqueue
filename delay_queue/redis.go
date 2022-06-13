@@ -2,7 +2,7 @@ package delay_queue
 
 import (
 	"github.com/garyburd/redigo/redis"
-	"github.com/tengzbiao/go-delay-queue/config"
+	"github.com/tengzbiao/go-delayqueue/config"
 
 	"log"
 	"time"

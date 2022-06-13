@@ -7,9 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/tengzbiao/go-delay-queue/config"
-	"github.com/tengzbiao/go-delay-queue/delay_queue"
-	"github.com/tengzbiao/go-delay-queue/logger"
+	"github.com/tengzbiao/go-delayqueue/config"
+	"github.com/tengzbiao/go-delayqueue/delay_queue"
+	"github.com/tengzbiao/go-delayqueue/logger"
 )
 
 type queueRouter struct {

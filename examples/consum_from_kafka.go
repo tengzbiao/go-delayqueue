@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/tengzbiao/go-delay-queue/config"
-	"github.com/tengzbiao/go-delay-queue/delay_queue"
+	"github.com/tengzbiao/go-delayqueue/config"
+	"github.com/tengzbiao/go-delayqueue/delay_queue"
 )
 
 func main() {

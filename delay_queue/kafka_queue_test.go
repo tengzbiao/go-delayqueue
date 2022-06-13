@@ -1,7 +1,7 @@
 package delay_queue
 
 import (
-	"github.com/tengzbiao/go-delay-queue/config"
+	"github.com/tengzbiao/go-delayqueue/config"
 	"testing"
 )
 

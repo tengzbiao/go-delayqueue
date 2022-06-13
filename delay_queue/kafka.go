@@ -2,7 +2,7 @@ package delay_queue
 
 import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"github.com/tengzbiao/go-delay-queue/config"
+	"github.com/tengzbiao/go-delayqueue/config"
 	"math"
 	"time"
 )

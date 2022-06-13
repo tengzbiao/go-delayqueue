@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/garyburd/redigo/redis"
-	"github.com/tengzbiao/go-delay-queue/config"
-	"github.com/tengzbiao/go-delay-queue/logger"
+	"github.com/tengzbiao/go-delayqueue/config"
+	"github.com/tengzbiao/go-delayqueue/logger"
 )
 
 // redis延迟队列，分桶实现快存快读
